@@ -1,0 +1,149 @@
+.requerido {
+	font-family: Verdana,Arial,Helvetica,sans-serif;
+	font-size: 13px;
+	color: #333;
+	border: 1px solid #b7b7b7;
+	text-align: left;
+	background-color: #EDEDED;
+}
+
+.requerido:hover {
+	background-color: #FFF;
+	border: 1px solid #FF0000;
+}
+.nrequerido {
+	font-family: Verdana,Arial,Helvetica,sans-serif;
+	font-size: 13px;
+	color: #333;
+	border: 1px solid #b7b7b7;
+	text-align: left;
+	background-color: #EDEDED;
+}
+
+.nrequerido:hover {
+	background-color: #FFF;
+	border: 1px solid #b7b7b7;
+}
+
+.req-numero {
+	font-family: Verdana,Arial,Helvetica,sans-serif;
+	font-size: 13px;
+	color: #333;
+	border: 1px solid #b7b7b7;
+	text-align: left;
+	background-color: #EDEDED;
+}
+
+.req-numero:hover {
+	background-color: #FFF;
+	border: 1px solid #FF0000;
+}
+
+.nreq-numero {
+	font-family: Verdana,Arial,Helvetica,sans-serif;
+	font-size: 13px;
+	color: #333;
+	border: 1px solid #b7b7b7;
+	text-align: left;
+	background-color: #EDEDED;
+}
+
+.nreq-numero:hover {
+	background-color: #FFF;
+	border: 1px solid #333;
+}
+
+.req-texto {
+	font-family: Verdana,Arial,Helvetica,sans-serif;
+	font-size: 13px;
+	color: #333;
+	border: 1px solid #b7b7b7;
+	text-align: left;
+	background-color: #EDEDED;
+}
+
+.req-texto:hover {
+	background-color: #FFF;
+	border: 1px solid #FF0000;
+}
+
+.nreq-texto {
+	font-family: Verdana,Arial,Helvetica,sans-serif;
+	font-size: 13px;
+	color: #333;
+	border: 1px solid #b7b7b7;
+	text-align: left;
+	background-color: #EDEDED;
+}
+
+.nreq-texto:hover {
+	background-color: #FFF;
+	border: 1px solid #333;
+}
+
+.req-letra {
+	font-family: Verdana,Arial,Helvetica,sans-serif;
+	font-size: 13px;
+	color: #333;
+	border: 1px solid #b7b7b7;
+	text-align: left;
+	background-color: #EDEDED;
+}
+
+.req-letra:hover {
+	background-color: #FFF;
+	border: 1px solid #FF0000;
+}
+
+.nreq-letra {
+	font-family: Verdana,Arial,Helvetica,sans-serif;
+	font-size: 13px;
+	color: #333;
+	border: 1px solid #b7b7b7;
+	text-align: left;
+	background-color: #EDEDED;
+}
+
+.nreq-letra:hover {
+	background-color: #FFF;
+	border: 1px solid #333;
+}
+
+.req-email{
+	font-family: Verdana,Arial,Helvetica,sans-serif;
+	font-size: 13px;
+	color: #333;
+	border: 1px solid #b7b7b7;
+	text-align: left;
+	background-color: #EDEDED;
+}
+
+.req-email:hover {
+	background-color: #FFF;
+	border: 1px solid #FF0000;
+}
+
+
+.nreq-email{
+	font-family: Verdana,Arial,Helvetica,sans-serif;
+	font-size: 13px;
+	color: #333;
+	border: 1px solid #b7b7b7;
+	text-align: left;
+	background-color: #EDEDED;
+}
+
+.nreq-email:hover {
+	background-color: #FFF;
+	border: 1px solid #333;
+}
+
+.msgError {
+	border: 1px solid #FF0000;
+	padding: 3px;
+}
+.tam {
+	text-align: left;
+}
+
+
