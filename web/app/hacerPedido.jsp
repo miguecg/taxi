@@ -39,13 +39,12 @@
 
             <script type="text/javascript">
                 $(function () {
-                    $('#hped').on('click', function () {
-                        
+                    $('#hpg').on('click', function () {
                         if ($.validaFormulario({nform: 'pform'})) {
                             alert('Hay errores en sus datos !');
                         } else {
                             $.ajax({
-                                url: '/taxi/app/taxi.do',
+                                url: '/taxi/app/pedido.do',
                                 contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
                                 data: $('form[name="pform"]').serialize(),
                                 type: 'POST',
@@ -62,9 +61,9 @@
                                 }
                             }).done(function (html) {
                                 $('#msg').dialog('close');
-                                $('#principal').html(html);
+                                $('#contenido').html(html);
                             }).fail(function (jqXHR, textStatus) {
-                                $('#vent').html('<span style=\"padding:3px\">' + jqXHR.responseText + '</span>').addClass('ui-state-error ui-corner-all');
+                                $('#msg').html('<span style=\"padding:3px\">' + jqXHR.responseText + '</span>').addClass('ui-state-error ui-corner-all');
                             });
                         }
                     });
@@ -120,7 +119,7 @@
         <div class="ui-widget-content">
 
             <input type="hidden" name="opcion" value="agr"/>
-            <input id="hped" type="button" value="Hacer pedido"/>
+            <input id="hpg" type="button" value="Hacer pedido"/>
         </div>
 
     </form>

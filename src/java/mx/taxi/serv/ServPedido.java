@@ -37,7 +37,7 @@ public class ServPedido extends HttpServlet {
             pedido.setPediLatitud(lat);
             pedido.setPediLongitud(lon);
             pedido.setPediUsuario(idUsua);
-            pedido.setPediTaxi(taxi != null ? taxi : 0l);
+            pedido.setPediTaxi(taxi != null ? taxi : null);
 
             String msg = null;
 

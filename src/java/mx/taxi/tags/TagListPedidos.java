@@ -45,19 +45,22 @@ public class TagListPedidos extends BodyTagSupport {
             out.println("<div class=\"ui-widget-header\">Pedidos de taxis</div>");
             out.println("<table style=\"width:100%\">");
             out.println("<tr>");
+            
             out.println("<th class=\"ui-widget-header\">ID</th>");
             out.println("<th class=\"ui-widget-header\">Estatus</th>");
             out.println("<th class=\"ui-widget-header\">Fecha</th>");
             out.println("<th class=\"ui-widget-header\">Latitud</th>");
             out.println("<th class=\"ui-widget-header\">Longitud</th>");
             out.println("<th class=\"ui-widget-header\">Monto</th>");
-            out.println("<th class=\"ui-widget-header\">Taxi</th>");
+            out.println("<th class=\"ui-widget-header\">Taxi</th>");  
+            out.println("<th class=\"ui-widget-header\">&nbsp;</th>");
             out.println("</tr>");
 
             List<Pedido> lp = pe.getPedidos();
 
             for (Pedido p : lp) {
                 out.println("<tr>");
+                
                 out.println("<td class=\"ui-widget-content\">" + p.getPediPedido() + "</td>");
                 out.println("<td class=\"ui-widget-content\">");
 
@@ -73,16 +76,18 @@ public class TagListPedidos extends BodyTagSupport {
 
                 out.println("</td>");
 
-                SimpleDateFormat sdf = new SimpleDateFormat("EEEE MMMM d HH:mm:ss yyyy");
+                SimpleDateFormat sdf = new SimpleDateFormat("EEE MMM dd HH:mm:ss");
+                SimpleDateFormat stf = new SimpleDateFormat("hh:mm:ss a");
+                
 
-                out.println("<td class=\"ui-widget-content\">" + sdf.format(p.getPediFecha()) + "</td>");
+                out.println("<td class=\"ui-widget-content\">" + p.getPediFecha()+ " "+ sdf.format(p.getPediFecha()) + "</td>");
                 out.println("<td class=\"ui-widget-content\">" + p.getPediLatitud() + "</td>");
                 out.println("<td class=\"ui-widget-content\">" + p.getPediLongitud() + "</td>");
                 out.println("<td class=\"ui-widget-content\">" + (p.getPediMonto() > 0.0 ? p.getPediMonto() : "-") + "</td>");
                 out.println("<td class=\"ui-widget-content\">");
 
                 Taxi t = new Taxi();
-                if (p.getPediTaxi() != null || p.getPediTaxi() == 0.0) {
+                if (p.getPediTaxi() != null && p.getPediTaxi() != 0.0) {
                     t.setId(p.getPediTaxi());
                     t = t.getTaxi();
                     out.println(t.getTaxiTaxi() + " " + t.getTaxiPlaca());
@@ -90,7 +95,8 @@ public class TagListPedidos extends BodyTagSupport {
                     out.println("-");
                 }
 
-                out.println("</td>");
+                out.println("</td>");   
+                out.println("<td class=\"ui-widget-content\"><input type=\"button\" name=\"v_pedido\" value=\"Ver posici&oacute;n\" onclick=\"javascript:window.open('/taxi/app/geo.jsp?v_latitud="+p.getPediLatitud()+"&v_longitud=" +p.getPediLongitud()+"', '', 'width=800,height=600,scrollbars=1');\"/></th>");
                 out.println("</tr>");
             }
 

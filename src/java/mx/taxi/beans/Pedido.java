@@ -2,7 +2,6 @@
  * Autor: Miguel Angel Cedeno Garciduenas
  * Email: miguecg@gmail.com 
  */
-
 package mx.taxi.beans;
 
 /**
@@ -122,10 +121,18 @@ public class Pedido implements Serializable {
         try {
 
             dao = dbExterno ? dao : new Dao();
-            dao.insertar(
-                      "Insert into PEDIDO(PEDI_LATITUD,PEDI_LONGITUD,PEDI_USUARIO,PEDI_TAXI) "
-                    + " VALUES ('" + pedido.getPediLatitud() + "','" + pedido.getPediLongitud() + "','" + pedido.getPediUsuario() + "') "
-            );
+
+            if (pedido.getPediTaxi() != null) {
+                dao.insertar(
+                        "Insert into PEDIDO(PEDI_LATITUD,PEDI_LONGITUD,PEDI_USUARIO,PEDI_TAXI) "
+                        + " VALUES ('" + pedido.getPediLatitud() + "','" + pedido.getPediLongitud() + "','" + pedido.getPediUsuario() + "','" + (pedido.getPediTaxi() != null ? pedido.getPediTaxi() : "") + "') "
+                );
+            } else {
+                dao.insertar(
+                        "Insert into PEDIDO(PEDI_LATITUD,PEDI_LONGITUD,PEDI_USUARIO) "
+                        + " VALUES ('" + pedido.getPediLatitud() + "','" + pedido.getPediLongitud() + "','" + pedido.getPediUsuario() + "') "
+                );
+            }
 
             ResultSet rst = dao.consultar("Select LAST_INSERT_ID() ");
             if (rst != null && rst.next()) {
@@ -150,14 +157,14 @@ public class Pedido implements Serializable {
         try {
 
             dao = dbExterno ? dao : new Dao();
-            
+
             dao.actualizar(
-                      "Update PEDIDO "
+                    "Update PEDIDO "
                     + "Set pedi_estatus =  '" + estatus + "' "
                     + "Where pedi_pedido = '" + pediPedido + "'"
             );
-            
-           if (!dbExterno) {
+
+            if (!dbExterno) {
                 dao.desconectar();
             }
 
@@ -173,7 +180,7 @@ public class Pedido implements Serializable {
         try {
             dao = dbExterno ? dao : new Dao();
             dao.actualizar(
-                      "Update PEDIDO "
+                    "Update PEDIDO "
                     + "Set pedi_monto = '" + monto + "' "
                     + "Where pedi_pedido = '" + pediPedido + "' "
             );
@@ -192,72 +199,72 @@ public class Pedido implements Serializable {
 
         try {
             dao = dbExterno ? dao : new Dao();
-            
+
             dao.actualizar(
-                      "Update PEDIDO "
+                    "Update PEDIDO "
                     + "Set pedi_taxi = '" + taxi + "' "
                     + "Where pedi_pedido = '" + pediPedido + "' "
             );
-            
+
             if (!dbExterno) {
                 dao.desconectar();
             }
-            
+
         } catch (IOException e) {
             throw new TaxiException(e);
         } catch (SQLException e) {
             throw new TaxiException(e);
-        }        
+        }
     }
 
     public Float calcularPago(Long pediPedido) throws TaxiException {
-        
+
         Float monto = 0.0f;
-        
+
         try {
-            
+
             dao = dbExterno ? dao : new Dao();
-            
+
             Recorrido reco = new Recorrido(dao);
-            reco.setCondicion("Where reco_pedido = '"+pediPedido.toString()+"'");
+            reco.setCondicion("Where reco_pedido = '" + pediPedido.toString() + "'");
             List<Recorrido> lr = reco.getRecorridos();
-            
+
             Double lat1 = 0.0d;
             Double lat2 = 0.0d;
             Double lon1 = 0.0d;
             Double lon2 = 0.0d;
             for (Recorrido r : lr) {
-                
+
                 if (r.getRecoTrecorrido().equals("I")) {
                     lat1 = r.getRecoLatitud();
                     lon1 = r.getRecoLongitud();
                 } else if (r.getRecoTrecorrido().equals("F")) {
                     lat2 = r.getRecoLatitud();
                     lon2 = r.getRecoLongitud();
-                }                
+                }
             }
-                 
+
             Double dist = this.distanciaPuntos(lat1, lat2, lon1, lon2);
-            
+
             this.setId(pediPedido);
-            
+
             Taxi tx = new Taxi(dao);
             tx.setId(this.getPedido().getPediTaxi());
             Tipotaxi tt = new Tipotaxi(dao);
             tt.setId(tx.getTaxiTipotaxi());
 
             monto = tt.getTiptPrecio() * dist.floatValue();
-            
+
             if (!dbExterno) {
                 dao.desconectar();
             }
-            
+
         } catch (IOException e) {
             throw new TaxiException(e);
         } catch (SQLException e) {
             throw new TaxiException(e);
         }
-        
+
         return monto;
     }
 
@@ -313,8 +320,8 @@ public class Pedido implements Serializable {
                             + "PEDI_LONGITUD, "
                             + "PEDI_MONTO, "
                             + "PEDI_FECHAPAGO, "
-                            + "PEDI_TAXI,PEDI_USUARIO "                            
-                            + "FROM PEDIDO "+condicion);
+                            + "PEDI_TAXI,PEDI_USUARIO "
+                            + "FROM PEDIDO " + condicion);
 
             while (rst != null && rst.next()) {
                 pedido = new Pedido();
@@ -347,9 +354,7 @@ public class Pedido implements Serializable {
     public Pedido getPedido() {
         return pedido;
     }
-    
-    
-    
+
     public Double distanciaPuntos(Double lat1, Double lat2, Double lon1, Double lon2) {
         Double dist = 0.0;
 
@@ -357,19 +362,19 @@ public class Pedido implements Serializable {
         Double dLat = rad(lat2 - lat1);
         Double dLong = rad(lon2 - lon1);
 
-        Double a = Math.sin(dLat / 2) 
-                 * Math.sin(dLat / 2) 
-                 + Math.cos(rad(lat1)) 
-                 * Math.cos(rad(lat2)) 
-                 * Math.sin(dLong / 2) 
-                 * Math.sin(dLong / 2);
-        
+        Double a = Math.sin(dLat / 2)
+                * Math.sin(dLat / 2)
+                + Math.cos(rad(lat1))
+                * Math.cos(rad(lat2))
+                * Math.sin(dLong / 2)
+                * Math.sin(dLong / 2);
+
         Double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
         dist = radio * c;
 
-     return dist;
+        return dist;
     }
-    
+
     private Double rad(Double num) {
         return (num * Math.PI / 180);
     }
